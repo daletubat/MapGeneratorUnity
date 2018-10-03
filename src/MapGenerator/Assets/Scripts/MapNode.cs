@@ -21,27 +21,26 @@ public class MapNode : MonoBehaviour
 			{
 				case EConnectionPoints.Up:
 					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Down, rootParentGameObject);
-					
 					break;
 
 				case EConnectionPoints.Down:
 					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Up, rootParentGameObject);
-
 					break;
 
 				case EConnectionPoints.Left:
 					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Right, rootParentGameObject);
-
 					break;
 
 				case EConnectionPoints.Right:
 					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Left, rootParentGameObject);
-
 					break;
 			}
 
 			if(newPiece != rootParentGameObject)
+			{
+				root.Map.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
 				newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
+			}
 		}
 	}
 
@@ -74,6 +73,7 @@ public class MapNode : MonoBehaviour
 				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X - 1, Coordinates.Z);
 				break;
 		}
+
 		return newPiece;
 	}
 }

@@ -14,7 +14,10 @@ public class MapConstructor : MonoBehaviour
 		Random.InitState((int)System.DateTime.Now.Ticks);
 
 		Map = new Dictionary<PieceCoordinates, MapNode>();
+
 		OriginNode.Coordinates = new PieceCoordinates(0, 0);
+		Map.Add(OriginNode.Coordinates, OriginNode);
+
 		OriginNode.Build(this, gameObject, Depth);
 	}
 }
