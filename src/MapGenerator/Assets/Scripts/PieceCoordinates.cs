@@ -12,4 +12,20 @@ public class PieceCoordinates //: MonoBehaviour
 		X = x;
 		Z = z;
 	}
+
+	public override bool Equals(object obj)
+	{
+		var coordinates = obj as PieceCoordinates;
+		return coordinates != null &&
+			   X == coordinates.X &&
+			   Z == coordinates.Z;
+	}
+
+	public override int GetHashCode()
+	{
+		var hashCode = 1911744652;
+		hashCode = hashCode * -1521134295 + X.GetHashCode();
+		hashCode = hashCode * -1521134295 + Z.GetHashCode();
+		return hashCode;
+	}
 }
