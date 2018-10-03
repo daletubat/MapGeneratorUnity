@@ -7,59 +7,40 @@ public class MapNode : MonoBehaviour
 	public List<EConnectionPoints> ConnectionPoints;
 	public int Prevalance;
 	public PieceCoordinates Coordinates;
+	public bool ContainsEndpoint;
 
 	public void Build(MapConstructor root, GameObject rootParentGameObject, int depth)
 	{
-		//Recursive Base Case
 		if (depth <= 0) return;
+
 
 		List<EConnectionPoints> pointsConnectedTo = new List<EConnectionPoints>();
 
-		foreach(var connection in ConnectionPoints)
+		foreach (var connection in ConnectionPoints)
 		{
-			if (!canPlacePieceInConnection(root, connection))
+			if (!canPlacePieceInConnection(connection, root))
 			{
 				Debug.Log($"Cannot place piece to the {connection} of piece {gameObject.name}.");
 				continue;
 			}
 
-			//This doesn't make sense. Should change this later.
-			GameObject newPiece = rootParentGameObject;
+			GameObject newPiece = InstantiateNewPieceWithConnection(connection.Opposite(), rootParentGameObject);
 
-			switch(connection)
-			{
-				case EConnectionPoints.Up:
-					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Down, rootParentGameObject);
-					break;
+			root.Map.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
+			pointsConnectedTo.Add(connection);
 
-				case EConnectionPoints.Down:
-					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Up, rootParentGameObject);
-					break;
-
-				case EConnectionPoints.Left:
-					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Right, rootParentGameObject);
-					break;
-
-				case EConnectionPoints.Right:
-					newPiece = InstantiateNewPieceWithConnection(root, EConnectionPoints.Left, rootParentGameObject);
-					break;
-			}
-
-			if(newPiece != rootParentGameObject)
-			{
-				root.Map.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
-				newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
-				pointsConnectedTo.Add(connection);
-			}
+			newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
 		}
 
 		foreach(var successfulConnection in pointsConnectedTo)
-		{
 			ConnectionPoints.Remove(successfulConnection);
-		}
+
+		//TODO: Fix this
+		Debug.Log($"{gameObject.name} has {ConnectionPoints.Count} connections left");
+		ContainsEndpoint = ConnectionPoints.Count > 0;
 	}
 
-	private GameObject InstantiateNewPieceWithConnection(MapConstructor root, EConnectionPoints connection, GameObject parentGameObject)
+	private GameObject InstantiateNewPieceWithConnection(EConnectionPoints connection, GameObject parentGameObject)
 	{	
 		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomPieceWithConnection(connection));
 		newPiece.transform.parent = parentGameObject.transform;
@@ -92,7 +73,7 @@ public class MapNode : MonoBehaviour
 		return newPiece;
 	}
 
-	private bool canPlacePieceInConnection(MapConstructor root, EConnectionPoints connection)
+	private bool canPlacePieceInConnection(EConnectionPoints connection, MapConstructor root)
 	{
 		PieceCoordinates nextCoordinates;
 		switch (connection)
