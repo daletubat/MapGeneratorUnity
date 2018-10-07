@@ -6,6 +6,7 @@ public class MapNode : MonoBehaviour
 {
 	public List<EConnectionPoints> ConnectionPoints;
 	public int Prevalance;
+	public float PieceSize;
 	public PieceCoordinates Coordinates;
 	public bool ContainsEndpoint;
 
@@ -28,8 +29,7 @@ public class MapNode : MonoBehaviour
 
 			root.Map.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
 			pointsConnectedTo.Add(connection);
-
-			newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
+			StartCoroutine(WaitThenBuild(root, rootParentGameObject, depth, newPiece));
 		}
 
 		foreach(var successfulConnection in pointsConnectedTo)
@@ -50,22 +50,22 @@ public class MapNode : MonoBehaviour
 		{
 			//These connections are counter-intuitive. The up connection means that it's being placed below the caller.
 			case EConnectionPoints.Up:
-				newPiece.transform.position = transform.position + new Vector3(0, 0, -2f);
+				newPiece.transform.position = transform.position + new Vector3(0, 0, -PieceSize);
 				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z - 1);
 				break;
 
 			case EConnectionPoints.Down:
-				newPiece.transform.position = transform.position + new Vector3(0, 0, 2f);
+				newPiece.transform.position = transform.position + new Vector3(0, 0, PieceSize);
 				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z + 1);
 				break;
 
 			case EConnectionPoints.Left:
-				newPiece.transform.position = transform.position + new Vector3(2, 0, 0f);
+				newPiece.transform.position = transform.position + new Vector3(PieceSize, 0, 0f);
 				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X + 1, Coordinates.Z);
 				break;
 
 			case EConnectionPoints.Right:
-				newPiece.transform.position = transform.position + new Vector3(-2, 0, 0f);
+				newPiece.transform.position = transform.position + new Vector3(-PieceSize, 0, 0f);
 				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X - 1, Coordinates.Z);
 				break;
 		}
@@ -97,5 +97,11 @@ public class MapNode : MonoBehaviour
 		}
 
 		return !root.Map.ContainsKey(nextCoordinates);
+	}
+
+	public IEnumerator WaitThenBuild(MapConstructor root, GameObject rootParentGameObject, int depth, GameObject newPiece)
+	{
+		yield return new WaitForSeconds(0.05f);
+		newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
 	}
 }

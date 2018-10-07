@@ -225,3 +225,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 00000000010000000200000003000000
   Prevalance: 1
+  PieceSize: 2
+  ContainsEndpoint: 0
