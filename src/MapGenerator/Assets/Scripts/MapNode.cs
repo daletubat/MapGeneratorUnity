@@ -19,18 +19,17 @@ public class MapNode : MonoBehaviour
 
 		foreach (var connection in ConnectionPoints)
 		{
-			if (!canPlacePieceInConnection(connection, coordinateMap))
+			if (!CanPlacePieceInConnection(connection, coordinateMap))
 			{
 				DevTools.Log($"Cannot place piece to the {connection} of piece {gameObject.name}.");
 				continue;
 			}
 
 			GameObject newPiece = InstantiateRandomPieceAtConnection(connection, rootParentGameObject);
-			PlacePieceAtConnection(newPiece, connection);
 
 			coordinateMap.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
 			successfulConnectionsMade.Add(connection);
-			StartCoroutine(WaitThenBuild(coordinateMap, rootParentGameObject, depth, newPiece));
+			StartCoroutine(WaitThenBuildAtNode(newPiece.GetComponent<MapNode>(), coordinateMap, rootParentGameObject, depth));
 		}
 
 		foreach(var successfulConnection in successfulConnectionsMade)
@@ -49,6 +48,8 @@ public class MapNode : MonoBehaviour
 		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomPieceWithConnection(connectionPointForNewPiece));
 		newPiece.transform.parent = parentGameObject.transform;
 		newPiece.GetComponent<MapNode>().ConnectionPoints.Remove(connectionPointForNewPiece);
+
+		PlacePieceAtConnection(newPiece, connection);
 
 		return newPiece;
 	}
@@ -79,7 +80,7 @@ public class MapNode : MonoBehaviour
 		}
 	}
 
-	private bool canPlacePieceInConnection(EConnectionPoints connection, Dictionary<PieceCoordinates, MapNode> coordinateMap)
+	private bool CanPlacePieceInConnection(EConnectionPoints connection, Dictionary<PieceCoordinates, MapNode> coordinateMap)
 	{
 		PieceCoordinates nextCoordinates;
 		switch (connection)
@@ -105,9 +106,9 @@ public class MapNode : MonoBehaviour
 		return !coordinateMap.ContainsKey(nextCoordinates);
 	}
 
-	public IEnumerator WaitThenBuild(Dictionary<PieceCoordinates, MapNode> coordinateMap, GameObject rootParentGameObject, int depth, GameObject newPiece)
+	public IEnumerator WaitThenBuildAtNode(MapNode node, Dictionary<PieceCoordinates, MapNode> coordinateMap, GameObject rootParentGameObject, int depth)
 	{
 		yield return new WaitForSeconds(0.05f);
-		newPiece.GetComponent<MapNode>().Build(coordinateMap, rootParentGameObject, depth - 1);
+		node.Build(coordinateMap, rootParentGameObject, depth - 1);
 	}
 }
