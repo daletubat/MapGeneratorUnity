@@ -12,6 +12,8 @@ public class MapConstructor : MonoBehaviour
 
 	private void Start()
 	{
+		DevTools.SetDebugOutputs(false, false);
+
 		Random.InitState((int)System.DateTime.Now.Ticks);
 
 		Map = new Dictionary<PieceCoordinates, MapNode>();
@@ -19,7 +21,7 @@ public class MapConstructor : MonoBehaviour
 		OriginNode.Coordinates = new PieceCoordinates(0, 0);
 		Map.Add(OriginNode.Coordinates, OriginNode);
 
-		OriginNode.Build(this, gameObject, Depth);
+		OriginNode.Build(Map, gameObject, Depth);
 		if(!UseMaterialColors)
 		{
 			Material newMat = new Material(Shader.Find("Standard"));

@@ -10,70 +10,76 @@ public class MapNode : MonoBehaviour
 	public PieceCoordinates Coordinates;
 	public bool ContainsEndpoint;
 
-	public void Build(MapConstructor root, GameObject rootParentGameObject, int depth)
+	public void Build(Dictionary<PieceCoordinates, MapNode> coordinateMap, GameObject rootParentGameObject, int depth)
 	{
 		if (depth <= 0) return;
 
 
-		List<EConnectionPoints> pointsConnectedTo = new List<EConnectionPoints>();
+		List<EConnectionPoints> successfulConnectionsMade = new List<EConnectionPoints>();
 
 		foreach (var connection in ConnectionPoints)
 		{
-			if (!canPlacePieceInConnection(connection, root))
+			if (!canPlacePieceInConnection(connection, coordinateMap))
 			{
-				Debug.Log($"Cannot place piece to the {connection} of piece {gameObject.name}.");
+				DevTools.Log($"Cannot place piece to the {connection} of piece {gameObject.name}.");
 				continue;
 			}
 
-			GameObject newPiece = InstantiateNewPieceWithConnection(connection.Opposite(), rootParentGameObject);
+			GameObject newPiece = InstantiateRandomPieceAtConnection(connection, rootParentGameObject);
+			PlacePieceAtConnection(newPiece, connection);
 
-			root.Map.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
-			pointsConnectedTo.Add(connection);
-			StartCoroutine(WaitThenBuild(root, rootParentGameObject, depth, newPiece));
+			coordinateMap.Add(newPiece.GetComponent<MapNode>().Coordinates, newPiece.GetComponent<MapNode>());
+			successfulConnectionsMade.Add(connection);
+			StartCoroutine(WaitThenBuild(coordinateMap, rootParentGameObject, depth, newPiece));
 		}
 
-		foreach(var successfulConnection in pointsConnectedTo)
+		foreach(var successfulConnection in successfulConnectionsMade)
 			ConnectionPoints.Remove(successfulConnection);
 
 		//TODO: Fix this
-		Debug.Log($"{gameObject.name} has {ConnectionPoints.Count} connections left");
+		DevTools.Log($"{gameObject.name} has {ConnectionPoints.Count} connections left");
 		ContainsEndpoint = ConnectionPoints.Count > 0;
 	}
 
-	private GameObject InstantiateNewPieceWithConnection(EConnectionPoints connection, GameObject parentGameObject)
-	{	
-		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomPieceWithConnection(connection));
+	private GameObject InstantiateRandomPieceAtConnection(EConnectionPoints connection, GameObject parentGameObject)
+	{
+		//If we want to connect at a connection point, we need a piece with the opposite connection.
+		var connectionPointForNewPiece = connection.Opposite();
+
+		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomPieceWithConnection(connectionPointForNewPiece));
 		newPiece.transform.parent = parentGameObject.transform;
-		newPiece.GetComponent<MapNode>().ConnectionPoints.Remove(connection);
-
-		switch (connection)
-		{
-			//These connections are counter-intuitive. The up connection means that it's being placed below the caller.
-			case EConnectionPoints.Up:
-				newPiece.transform.position = transform.position + new Vector3(0, 0, -PieceSize);
-				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z - 1);
-				break;
-
-			case EConnectionPoints.Down:
-				newPiece.transform.position = transform.position + new Vector3(0, 0, PieceSize);
-				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z + 1);
-				break;
-
-			case EConnectionPoints.Left:
-				newPiece.transform.position = transform.position + new Vector3(PieceSize, 0, 0f);
-				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X + 1, Coordinates.Z);
-				break;
-
-			case EConnectionPoints.Right:
-				newPiece.transform.position = transform.position + new Vector3(-PieceSize, 0, 0f);
-				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X - 1, Coordinates.Z);
-				break;
-		}
+		newPiece.GetComponent<MapNode>().ConnectionPoints.Remove(connectionPointForNewPiece);
 
 		return newPiece;
 	}
 
-	private bool canPlacePieceInConnection(EConnectionPoints connection, MapConstructor root)
+	private void PlacePieceAtConnection(GameObject newPiece, EConnectionPoints connection)
+	{
+		switch (connection)
+		{
+			case EConnectionPoints.Up:
+				newPiece.transform.position = transform.position + new Vector3(0, 0, PieceSize);
+				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z + 1);
+				break;
+
+			case EConnectionPoints.Down:
+				newPiece.transform.position = transform.position + new Vector3(0, 0, -PieceSize);
+				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z - 1);
+				break;
+
+			case EConnectionPoints.Left:
+				newPiece.transform.position = transform.position + new Vector3(-PieceSize, 0, 0f);
+				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X - 1, Coordinates.Z);
+				break;
+
+			case EConnectionPoints.Right:
+				newPiece.transform.position = transform.position + new Vector3(PieceSize, 0, 0f);
+				newPiece.GetComponent<MapNode>().Coordinates = new PieceCoordinates(Coordinates.X + 1, Coordinates.Z);
+				break;
+		}
+	}
+
+	private bool canPlacePieceInConnection(EConnectionPoints connection, Dictionary<PieceCoordinates, MapNode> coordinateMap)
 	{
 		PieceCoordinates nextCoordinates;
 		switch (connection)
@@ -96,12 +102,12 @@ public class MapNode : MonoBehaviour
 				break;
 		}
 
-		return !root.Map.ContainsKey(nextCoordinates);
+		return !coordinateMap.ContainsKey(nextCoordinates);
 	}
 
-	public IEnumerator WaitThenBuild(MapConstructor root, GameObject rootParentGameObject, int depth, GameObject newPiece)
+	public IEnumerator WaitThenBuild(Dictionary<PieceCoordinates, MapNode> coordinateMap, GameObject rootParentGameObject, int depth, GameObject newPiece)
 	{
 		yield return new WaitForSeconds(0.05f);
-		newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);
+		newPiece.GetComponent<MapNode>().Build(coordinateMap, rootParentGameObject, depth - 1);
 	}
 }
