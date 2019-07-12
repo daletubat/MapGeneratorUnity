@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapNode : MonoBehaviour
+public class MapNode : MonoBehaviour, IMapNode
 {
 	public List<EConnectionPoints> ConnectionPoints;
 	public int Prevalance;
@@ -10,16 +10,15 @@ public class MapNode : MonoBehaviour
 	public PieceCoordinates Coordinates;
 	public bool ContainsEndpoint;
 
-	public void Build(MapConstructor root, GameObject rootParentGameObject, int depth)
+	public void Build(IConstructor root, GameObject rootParentGameObject, int depth)
 	{
 		if (depth <= 0) return;
-
 
 		List<EConnectionPoints> pointsConnectedTo = new List<EConnectionPoints>();
 
 		foreach (var connection in ConnectionPoints)
 		{
-			if (!canPlacePieceInConnection(connection, root))
+			if (!root.RequestSpaceAvailable(Coordinates, connection))
 			{
 				Debug.Log($"Cannot place piece to the {connection} of piece {gameObject.name}.");
 				continue;
@@ -42,7 +41,7 @@ public class MapNode : MonoBehaviour
 
 	private GameObject InstantiateNewPieceWithConnection(EConnectionPoints connection, GameObject parentGameObject)
 	{	
-		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomPieceWithConnection(connection));
+		GameObject newPiece = Instantiate(Singletons.MapPieceLookUp.GetRandomHallwayPieceWithConnection(connection));
 		newPiece.transform.parent = parentGameObject.transform;
 		newPiece.GetComponent<MapNode>().ConnectionPoints.Remove(connection);
 
@@ -73,33 +72,7 @@ public class MapNode : MonoBehaviour
 		return newPiece;
 	}
 
-	private bool canPlacePieceInConnection(EConnectionPoints connection, MapConstructor root)
-	{
-		PieceCoordinates nextCoordinates;
-		switch (connection)
-		{
-			default:
-				nextCoordinates = new PieceCoordinates(0, 0);
-				break;
-
-			case EConnectionPoints.Up:
-				nextCoordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z + 1);
-				break;
-			case EConnectionPoints.Down:
-				nextCoordinates = new PieceCoordinates(Coordinates.X, Coordinates.Z - 1);
-				break;
-			case EConnectionPoints.Left:
-				nextCoordinates = new PieceCoordinates(Coordinates.X - 1, Coordinates.Z);
-				break;
-			case EConnectionPoints.Right:
-				nextCoordinates = new PieceCoordinates(Coordinates.X + 1, Coordinates.Z);
-				break;
-		}
-
-		return !root.Map.ContainsKey(nextCoordinates);
-	}
-
-	public IEnumerator WaitThenBuild(MapConstructor root, GameObject rootParentGameObject, int depth, GameObject newPiece)
+	public IEnumerator WaitThenBuild(IConstructor root, GameObject rootParentGameObject, int depth, GameObject newPiece)
 	{
 		yield return new WaitForSeconds(0.05f);
 		newPiece.GetComponent<MapNode>().Build(root, rootParentGameObject, depth - 1);

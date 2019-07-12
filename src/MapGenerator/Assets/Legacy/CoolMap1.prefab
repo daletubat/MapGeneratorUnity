@@ -8035,6 +8035,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114048015462261118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8048,6 +8050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 00000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114064307705819798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8061,6 +8065,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 03000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114064729388539612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8074,6 +8080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 0300000000000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114079338947197538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8087,6 +8095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 0
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114246712859900152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8100,6 +8110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114255600206290692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8113,6 +8125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 0300000001000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114270874475639200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8140,6 +8154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114301465697785294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8153,6 +8169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 0300000002000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114355546795469544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8166,6 +8184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114514663098637580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8179,6 +8199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 1
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114530407750720224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8192,6 +8214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 0200000001000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114560600236996620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8205,6 +8229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114564324334001370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8218,6 +8244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 0100000000000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114573498844277444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8231,6 +8259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 02000000
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114589467001671366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8244,6 +8274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114601767361141844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8257,6 +8289,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114640109807858954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8270,6 +8304,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 01000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114715885835665432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8283,6 +8319,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 03000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114724705331505948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8296,6 +8334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114759982510471524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8309,6 +8349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 00000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114821100325616228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8322,6 +8364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114834069200236354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8335,6 +8379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 02000000
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114854809933373872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8348,6 +8394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114867188085345126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8361,6 +8409,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 02000000
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114899943431058268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8374,6 +8424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 1
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114918553224985442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8387,6 +8439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114929040490704464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8400,6 +8454,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114931528038939236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8413,6 +8469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 3
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114948739571671912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8426,6 +8484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 6
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114955776657403430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8439,3 +8499,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 
   Prevalance: 5
+  PieceSize: 0
+  ContainsEndpoint: 0

@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fbdcdbcefbb35749ab3da547e0b52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pieces:
+  HallwayPieces:
   - {fileID: 114193661711198868, guid: 301a802ee490a034a8a64adf8f43ddb3, type: 2}
   - {fileID: 114874711541156360, guid: 58ab42a5b2f65ce40838480c857603db, type: 2}
   - {fileID: 114862435315414098, guid: e86947ba9de2d814cb90fe11e6880261, type: 2}
@@ -63,4 +63,18 @@ MonoBehaviour:
   - {fileID: 114405264889211896, guid: 1f3a77a0252c97f4ba037ba81d2733fb, type: 2}
   - {fileID: 114551026002299432, guid: 0110cc260277ae44ea1834667037f7f7, type: 2}
   - {fileID: 114655949026485824, guid: 216855b57db8db64a81469741ea6ce2b, type: 2}
-  RandomPiecePool: []
+  RoomPieces:
+  - {fileID: 114560434063510970, guid: f56f46efdbb539f40bcf205dfb6aefc1, type: 2}
+  - {fileID: 114070580903287862, guid: 2bf1845c182fc56439b5a62578d5e86e, type: 2}
+  - {fileID: 114958471955141042, guid: 132962d038c75a845860c3e5eae22eef, type: 2}
+  - {fileID: 114107725715345836, guid: d7a6668fe99cc6c43a60a78325e6c389, type: 2}
+  - {fileID: 114494176242424688, guid: f9392abc9aad9774a8e61e73bb9e0cc3, type: 2}
+  - {fileID: 114434507706437310, guid: fe80166f72b4c4b4eb299a519c732b4f, type: 2}
+  - {fileID: 114047918448046396, guid: 6b7c006125220244fb85556a2e242f07, type: 2}
+  - {fileID: 114271211711589890, guid: d51c8ee79eb7b6647b621b4753581c11, type: 2}
+  - {fileID: 114943279781434532, guid: 4e3c0535d0f798046bb26de0445464e8, type: 2}
+  - {fileID: 114000026583598616, guid: 3b97c2ea31d4ed84095242e1d756399b, type: 2}
+  - {fileID: 114960990093026826, guid: 8c8891e94ddd0c544a5e329949e866ab, type: 2}
+  - {fileID: 114359706040761074, guid: 68a2f9a827ad30247ae103c50a2a9991, type: 2}
+  RandomHallwayPiecePool: []
+  RandomRoomPiecePool: []

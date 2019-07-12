@@ -5,27 +5,28 @@ using UnityEngine;
 
 public class MapPieceLookUp : MonoBehaviour
 {
-	public List<MapNode> Pieces;
-	[SerializeField] private List<MapNode> RandomPiecePool = new List<MapNode>();
+	public List<MapNode> HallwayPieces;
+	public List<RoomNode> RoomPieces;
+
+	[SerializeField] private List<MapNode> RandomHallwayPiecePool = new List<MapNode>();
+	[SerializeField] private List<RoomNode> RandomRoomPiecePool = new List<RoomNode>();
 
 	public void Start()
 	{
-		generateRandomPiecePool();
+		generateRandomHallwayPiecePool();
+		generateRandomRoomPiecePool();
 	}
 
-	public MapNode GetRandomPiece()
-	{
-		return Pieces[Random.Range(0, Pieces.Count)];
-	}
+	#region HallwayPieces
 
-	public GameObject GetRandomPieceWithConnection(EConnectionPoints requiredConnection)
+	public GameObject GetRandomHallwayPieceWithConnection(EConnectionPoints requiredConnection)
 	{
-		if (RandomPiecePool.Count == 0)
-			generateRandomPiecePool();
+		if (RandomHallwayPiecePool.Count == 0)
+			generateRandomHallwayPiecePool();
 
 		List<GameObject> nodesWithRequiredConneciton = new List<GameObject>();
 
-		foreach(var piece in RandomPiecePool)
+		foreach(var piece in RandomHallwayPiecePool)
 		{
 			if(piece.ConnectionPoints.Contains(requiredConnection))
 			{
@@ -36,16 +37,53 @@ public class MapPieceLookUp : MonoBehaviour
 		return nodesWithRequiredConneciton[Random.Range(0, nodesWithRequiredConneciton.Count-1)];
 	}
 
-	private void generateRandomPiecePool()
+	private void generateRandomHallwayPiecePool()
 	{
-		RandomPiecePool.Clear();
+		RandomHallwayPiecePool.Clear();
 
-		foreach (var pieceInfo in Pieces)
+		foreach (var pieceInfo in HallwayPieces)
 		{
 			for (int i = 0; i < pieceInfo.Prevalance; i++)
 			{
-				RandomPiecePool.Add(pieceInfo);
+				RandomHallwayPiecePool.Add(pieceInfo);
 			}
 		}
 	}
+
+	#endregion
+
+	#region RoomPieces
+
+	public GameObject GetRandomRoomPieceWithRequiredConnectionPair(EConnectionPoints connectionPoint, EWallSide requiredWallType)
+	{
+		if (RandomHallwayPiecePool.Count == 0)
+			generateRandomRoomPiecePool();
+
+		List<GameObject> nodesWithRequiredWallType = new List<GameObject>();
+
+		foreach (var piece in RandomRoomPiecePool)
+		{
+			if (piece.WallConnectionPairs.Contains(new KeyValuePair<EConnectionPoints, EWallSide>(connectionPoint, requiredWallType)))
+			{
+				nodesWithRequiredWallType.Add(piece.gameObject);
+			}
+		}
+
+		return nodesWithRequiredWallType[Random.Range(0, nodesWithRequiredWallType.Count - 1)];
+	}
+
+	private void generateRandomRoomPiecePool()
+	{
+		RandomRoomPiecePool.Clear();
+
+		foreach (var pieceInfo in RoomPieces)
+		{
+			for (int i = 0; i < pieceInfo.Prevalance; i++)
+			{
+				RandomRoomPiecePool.Add(pieceInfo);
+			}
+		}
+	}
+
+	#endregion
 }

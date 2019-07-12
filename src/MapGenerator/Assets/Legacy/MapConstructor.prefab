@@ -255,6 +255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionPoints: 00000000010000000200000003000000
   Prevalance: 0
+  PieceSize: 0
+  ContainsEndpoint: 0
 --- !u!114 &114369064420047724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -267,4 +269,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Depth: 5
+  UseMaterialColors: 0
   OriginNode: {fileID: 114100193478217874}

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapConstructor : MonoBehaviour, IConstructor
+public class RoomConstructor : MonoBehaviour, IConstructor
 {
 	public int Depth;
 	public bool UseMaterialColors;
 
 	public Dictionary<PieceCoordinates, IMapNode> Map { get; private set; } 
-	public MapNode OriginNode;
+	public RoomNode OriginNode;
 
 	private void Start()
 	{
@@ -20,10 +20,10 @@ public class MapConstructor : MonoBehaviour, IConstructor
 		Map.Add(OriginNode.Coordinates, OriginNode);
 
 		OriginNode.Build(this, gameObject, Depth);
-		if(!UseMaterialColors)
+		if (!UseMaterialColors)
 		{
 			Material newMat = new Material(Shader.Find("Standard"));
-			foreach(MeshRenderer mr in GetComponentsInChildren<MeshRenderer>())
+			foreach (MeshRenderer mr in GetComponentsInChildren<MeshRenderer>())
 			{
 				mr.material = newMat;
 			}
